@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Subscription Plans</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- PayPal SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=ARks9h5PpW-v75JkGaXhAuCxXUcJiZyBtJeZOCRT-JtHmZzJ98t8UaGPW1HMJ9wXuvnHeSg13g2Kyxup&currency=USD"></script>
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+body { 
+  background:#0d1117; 
+  color:#ffffff; 
+  line-height:1.6; 
+  padding:20px; 
+  min-height:100vh;
+}
+.container { max-width:1200px; margin:0 auto; padding:20px;}
+header { text-align:center; margin-bottom:40px; padding:20px;}
+h1 { font-size:2.8rem; color:#58a6ff; margin-bottom:10px; }
+.subtitle { font-size:1.2rem; max-width:600px; margin:0 auto; color:#8b949e; }
+
+.pricing-container { display:flex; flex-wrap:wrap; justify-content:center; gap:25px; margin-bottom:50px; }
+
+.pricing-plan { background:#161b22; border-radius:15px; padding:30px 20px; flex:1; min-width:250px; max-width:280px; box-shadow:0 4px 20px rgba(0,0,0,0.6); border-top:5px solid #58a6ff; position:relative; transition: transform 0.3s, box-shadow 0.3s; }
+.pricing-plan:hover { transform: translateY(-10px); box-shadow:0 10px 30px rgba(0,0,0,0.8); }
+
+.best-value-badge {
+  position:absolute;
+  top:-15px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#ff9800;
+  color:#0d1117;
+  font-weight:700;
+  padding:5px 15px;
+  border-radius:20px;
+  font-size:0.9rem;
+}
+
+.plan-name { font-size:1.5rem; font-weight:700; margin-bottom:15px; text-align:center; background-color:#0d1117; color:#58a6ff; padding:10px; border-radius:5px; border:1px solid #58a6ff; }
+.plan-price { font-size:2.5rem; font-weight:800; text-align:center; margin-bottom:20px; color:#ff9800; transition: transform 0.3s; }
+.pricing-plan:hover .plan-price { transform: scale(1.1); }
+
+.plan-features { list-style:none; text-align:center; margin-bottom:20px; color:#c9d1d9; }
+.plan-features li { padding:8px; border-bottom:1px solid #30363d; }
+
+.plan-button { display:block; width:100%; background:#58a6ff; color:white; padding:12px; border-radius:8px; cursor:pointer; border:none; margin-top:10px; font-weight:600; transition: background 0.3s, transform 0.2s; }
+.plan-button:hover { background:#1f6feb; transform: scale(1.05); }
+
+.payment-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:999; }
+.payment-content { background:#0d1117; color:white; padding:30px; border-radius:15px; width:90%; max-width:450px; max-height:90%; overflow-y:auto; }
+.payment-header { display:flex; justify-content:space-between; align-items:center; }
+.close-btn { font-size:1.5rem; cursor:pointer; color:#ff9800; }
+#paypal-button-container { margin-top:20px; max-height:400px; overflow-y:auto; }
+
+.testimonials { background:#161b22; border-radius:15px; padding:40px; margin:50px auto; max-width:1000px; box-shadow:0 10px 30px rgba(0,0,0,0.5); text-align:center; color:#c9d1d9; }
+.testimonials h2 { text-align:center; margin-bottom:30px; color:#58a6ff; }
+.testimonial-container { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
+.testimonial { flex:1; min-width:300px; background:#0d1117; padding:25px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.6); }
+.testimonial p { font-style:italic; margin-bottom:15px; color:#8b949e; }
+.testimonial .client { font-weight:600; color:#ff9800; text-align:right; }
+
+@media (max-width:768px){ 
+  .pricing-container { flex-direction:column; align-items:center;} 
+  .pricing-plan{ width:100%; max-width:350px; } 
+  .payment-content { width:95%; max-width:95%; height:90%; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Premium Subscription Plans</h1>
+        <p class="subtitle">Choose the plan that fits your needs. Safe payments via PayPal or Credit/Debit Card.</p>
+    </header>
+
+    <div class="pricing-container">
+        <div class="pricing-plan">
+            <div class="plan-name">Minimum</div>
+            <div class="plan-price">$289</div>
+            <ul class="plan-features">
+                <li>Weekly automation updates (1 day/week)</li>
+                <li>Basic workflow monitoring</li>
+                <li>Light optimization tasks</li>
+                <li>Monthly performance report</li>
+                <li>Quick adjustments for simple processes</li>
+                <li>Affordable entry-level automation</li>
+                <li>Ideal for small businesses</li>
+                <li>Monthly Subscription: $39/month</li>
+            </ul>
+            <button class="plan-button" data-plan="Minimum" data-price="289">Select Plan</button>
+        </div>
+        <div class="pricing-plan">
+            <div class="plan-name">Medium</div>
+            <div class="plan-price">$649</div>
+            <ul class="plan-features">
+                <li>Automation updates 3 days/week</li>
+                <li>Weekly optimization & fine-tuning</li>
+                <li>Priority support</li>
+                <li>Small feature implementations</li>
+                <li>Error detection & troubleshooting</li>
+                <li>Analytics dashboard access</li>
+                <li>Ideal for growing businesses</li>
+                <li>Monthly Subscription: $79/month</li>
+            </ul>
+            <button class="plan-button" data-plan="Medium" data-price="649">Select Plan</button>
+        </div>
+        <div class="pricing-plan">
+            <div class="best-value-badge">BEST VALUE</div>
+            <div class="plan-name">High</div>
+            <div class="plan-price">$1540</div>
+            <ul class="plan-features">
+                <li>Daily automation updates & checks</li>
+                <li>Continuous workflow optimization</li>
+                <li>New automation flows each month</li>
+                <li>Advanced troubleshooting</li>
+                <li>Priority response (24h)</li>
+                <li>Custom KPI reporting</li>
+                <li>Best for scaling businesses</li>
+                <li>Monthly Subscription: $149/month</li>
+            </ul>
+            <button class="plan-button" data-plan="High" data-price="1540">Select Plan</button>
+        </div>
+        <div class="pricing-plan">
+            <div class="plan-name">Ultra</div>
+            <div class="plan-price">$4980</div>
+            <ul class="plan-features">
+                <li>24/7 monitoring & optimization</li>
+                <li>Unlimited automation improvements</li>
+                <li>Advanced workflow development</li>
+                <li>Near-instant VIP support</li>
+                <li>AI-powered enhancements</li>
+                <li>Full performance oversight</li>
+                <li>Enterprise-level automation</li>
+                <li>Monthly Subscription: $349/month</li>
+            </ul>
+            <button class="plan-button" data-plan="Ultra" data-price="4980">Select Plan</button>
+        </div>
+    </div>
+
+    <div class="testimonials">
+        <h2>What Our Customers Say</h2>
+        <div class="testimonial-container">
+            <div class="testimonial">
+                <p>"The Medium plan is perfect for our small business. Everything we need at an affordable price."</p>
+                <div class="client">- Sarah Johnson</div>
+            </div>
+            <div class="testimonial">
+                <p>"Upgrading to Ultra transformed our workflow. The dedicated support is worth every penny."</p>
+                <div class="client">- Michael Chen</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="payment-modal" id="paymentModal">
+    <div class="payment-content">
+        <div class="payment-header">
+            <h2 id="modalPlanTitle">Plan Selected</h2>
+            <span class="close-btn">&times;</span>
+        </div>
+        <h3 id="modalPlanPrice"></h3>
+        <div id="paypal-button-container"></div>
+    </div>
+</div>
+
+<script>
+const modal = document.getElementById("paymentModal");
+const closeBtn = document.querySelector(".close-btn");
+let selectedPrice = 0;
+
+document.querySelectorAll(".plan-button").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const plan = btn.dataset.plan;
+        const price = btn.dataset.price;
+        selectedPrice = price;
+        document.getElementById("modalPlanTitle").textContent = plan + " Plan";
+        document.getElementById("modalPlanPrice").textContent = "$" + price;
+        modal.style.display = "flex";
+        document.getElementById("paypal-button-container").innerHTML = "";
+
+        paypal.Buttons({
+            style: { shape: 'rect', color: 'gold', layout: 'vertical', label: 'pay' },
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{ amount: { value: selectedPrice } }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    alert("Payment completed by " + details.payer.name.given_name);
+                    modal.style.display = "none";
+                });
+            }
+        }).render("#paypal-button-container");
+    });
+});
+
+closeBtn.addEventListener("click", () => modal.style.display = "none");
+window.addEventListener("click", e => { if(e.target===modal) modal.style.display="none"; });
+</script>
+
+</body>
+</html>
