@@ -1,327 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Premium Subscription Plans</title>
-
-<!-- Optional icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-
-<!-- PayPal JS SDK -->
-<script src="https://www.paypal.com/sdk/js?client-id=ARks9h5PpW-v75JkGaXhAuCxXUcJiZyBtJeZOCRT-JtHmZzJ98t8UaGPW1HMJ9wXuvnHeSg13g2Kyxup&currency=USD"></script>
-
-<style>
-  :root{
-    --bg:#0d1117;
-    --card:#161b22;
-    --blue:#58a6ff;
-    --white:#ffffff;
-    --muted:#8b949e;
-    --accent:#ffb84d;
-    --cta:#1f6feb;
-    --glass: rgba(255,255,255,0.03);
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0; font-family: "Segoe UI", Roboto, Arial, sans-serif;
-    background:var(--bg); color:var(--white);
-    line-height:1.5;
-  }
-
-  .wrap{max-width:1200px;margin:0 auto;padding:28px;}
-  header{ text-align:center; margin-bottom:22px; }
-  header h1{ color:var(--blue); font-size:2.2rem; margin-bottom:6px; }
-  header p{ color:var(--muted); margin-top:0; }
-
-  .pricing-row {
-    display:flex;
-    gap:20px;
-    justify-content:center;
-    align-items:flex-start;
-    flex-wrap:nowrap;
-    overflow-x:auto;
-    padding:12px 4px;
-  }
-
-  .card{
-    background:var(--card);
-    border-radius:12px;
-    padding:20px;
-    width:250px;
-    min-width:230px;
-    border-top:4px solid var(--blue);
-    box-shadow:0 8px 30px rgba(0,0,0,0.6);
-    position:relative;
-    transition: transform .22s, box-shadow .22s;
-    flex:0 0 auto;
-  }
-  .card:hover{ transform:translateY(-6px); box-shadow:0 18px 45px rgba(0,0,0,0.85); }
-
-  .badge{
-    display:inline-block;
-    background:var(--accent);
-    color:#111;
-    padding:6px 12px;
-    border-radius:999px;
-    font-weight:700;
-    font-size:0.85rem;
-    margin-bottom:10px;
-  }
-  .plan-title{ color:var(--blue); font-weight:700; margin-bottom:8px; text-align:center; }
-  .plan-price{ color:var(--accent); font-weight:800; font-size:1.6rem; text-align:center; margin-bottom:6px; }
-  .plan-sub{ color:#c9d1d9; text-align:center; font-size:0.9rem; margin-bottom:12px; }
-  ul.features{ list-style:none; padding:0; margin:0 0 12px 0; color:#c9d1d9; font-size:0.94rem; }
-  ul.features li{ padding:8px 0; border-top:1px solid rgba(255,255,255,0.03); }
-
-  .card .select-plan-btn {
-    display:block;
-    width:100%;
-    padding:10px;
-    border-radius:10px;
-    border:0;
-    background:var(--blue);
-    color:var(--white);
-    font-weight:700;
-    cursor:pointer;
-    transition:transform .12s, background .12s;
-  }
-  .card .select-plan-btn:hover{ background:var(--cta); transform:scale(1.02); }
-
-  .about{ margin:26px 0; padding:18px; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02)); border-radius:10px; border:1px solid rgba(255,255,255,0.02); }
-  .about h2{ color:var(--blue); margin-top:0; }
-  .about p{ color:var(--muted); }
-
-  .contact-area{ display:grid; grid-template-columns: 1fr 320px; gap:20px; align-items:start; margin-top:22px; }
-  @media (max-width:980px){ .contact-area{ grid-template-columns: 1fr; } }
-
-  .form-card{ background:var(--card); padding:18px; border-radius:10px; border:1px solid rgba(255,255,255,0.03); box-shadow: 0 8px 30px rgba(0,0,0,0.6); }
-  .form-row{ margin-bottom:12px; display:flex; gap:8px; flex-wrap:wrap; }
-  .form-row .half{ flex:1; min-width:120px; }
-  label{ display:block; color:var(--muted); font-size:0.88rem; margin-bottom:6px; }
-  input[type="text"], input[type="email"], input[type="tel"], select, textarea{
-    width:100%; padding:10px 12px; border-radius:8px; background:var(--glass); border:1px solid rgba(255,255,255,0.04);
-    color:var(--white); outline:none; font-size:0.95rem;
-  }
-  select{ background:#ffffff; color:#111; border-radius:8px; padding:10px; }
-  textarea{ min-height:110px; resize:vertical; }
-
-  .side-card{ background:var(--card); padding:16px; border-radius:10px; border:1px solid rgba(255,255,255,0.03); }
-  .side-card h3{ color:var(--blue); margin:0 0 10px 0; }
-  .side-card p{ color:var(--muted); }
-
-  .submit-btn{ width:100%; padding:12px; background:var(--blue); color:var(--white); border:0; border-radius:10px; font-weight:700; cursor:pointer; transition:background .12s; }
-  .submit-btn:hover{ background:var(--cta); }
-
-  .msg{ margin-top:12px; padding:12px 14px; border-radius:10px; display:none; }
-  .msg.success{ background: rgba(33, 197, 132, 0.06); color: #9ef0c6; display:block; }
-  .msg.error{ background: rgba(255, 99, 71, 0.06); color: #ffb0a6; display:block; }
-
-  .payment-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:999; }
-  .payment-content { background:#0d1117; color:white; padding:22px; border-radius:12px; width:90%; max-width:520px; max-height:90%; overflow-y:auto; border:1px solid rgba(255,255,255,0.03); }
-  .payment-header { display:flex; justify-content:space-between; align-items:center; }
-  .close-btn { font-size:1.4rem; cursor:pointer; color:var(--accent); }
-  #paypal-button-container { margin-top:18px; max-height:420px; overflow-y:auto; -webkit-overflow-scrolling:touch; }
-
-  footer{ margin-top:26px; padding:16px; border-top:1px solid rgba(255,255,255,0.03); display:flex; justify-content:space-between; gap:12px; align-items:center; flex-wrap:wrap; color:var(--muted); }
-  footer a{ color:var(--blue); text-decoration:none; font-weight:700; margin-left:10px; }
-
-  @media (max-width:800px){
-    .pricing-row{ gap:14px; padding:10px; }
-    .card{ width:220px; min-width:200px; }
-  }
-</style>
-</head>
-<body>
-  <div class="wrap">
-    <header>
-      <h1>Premium Subscription Plans</h1>
-      <p class="muted">Clear pricing, reliable automations — powered by AI. Secure payments via PayPal or card.</p>
-    </header>
-
-    <section aria-label="pricing">
-      <div class="pricing-row" role="list">
-        <!-- Minimum -->
-        <div class="card" role="listitem" id="card-minimum">
-          <div class="plan-title">Minimum</div>
-          <div class="plan-price">$289</div>
-          <div class="plan-sub">Monthly Subscription: <strong>$39 / month</strong></div>
-          <ul class="features">
-            <li>Weekly automation updates (1 day / week)</li>
-            <li>Basic workflow monitoring</li>
-            <li>Light optimization tasks</li>
-            <li>Monthly performance report</li>
-            <li>Quick adjustments for simple processes</li>
-            <li>Affordable entry-level automation</li>
-            <li>Ideal for small businesses getting started with AI automation</li>
-          </ul>
-          <button class="select-plan-btn" data-plan="Minimum" data-price="289">Choose Minimum</button>
-        </div>
-
-        <!-- Medium -->
-        <div class="card" role="listitem" id="card-medium">
-          <div class="plan-title">Medium</div>
-          <div class="plan-price">$649</div>
-          <div class="plan-sub">Monthly Subscription: <strong>$79 / month</strong></div>
-          <ul class="features">
-            <li>Automation updates 3 days / week</li>
-            <li>Weekly optimization & fine-tuning</li>
-            <li>Priority support response</li>
-            <li>Implementation of small features</li>
-            <li>Error detection & minor troubleshooting</li>
-            <li>Analytics dashboard access</li>
-            <li>Performance reports</li>
-            <li>Suitable for growing businesses</li>
-          </ul>
-          <button class="select-plan-btn" data-plan="Medium" data-price="649">Choose Medium</button>
-        </div>
-
-        <!-- High -->
-        <div class="card" role="listitem" id="card-high" style="border-color:var(--accent); box-shadow:0 18px 50px rgba(255,184,77,0.08);">
-          <div style="text-align:center"><span class="badge">BEST VALUE</span></div>
-          <div class="plan-title">High</div>
-          <div class="plan-price">$1540</div>
-          <div class="plan-sub">Monthly Subscription: <strong>$149 / month</strong></div>
-          <ul class="features">
-            <li>Daily automation updates & checks</li>
-            <li>Continuous workflow optimization</li>
-            <li>New automation flows each month</li>
-            <li>Advanced troubleshooting</li>
-            <li>Priority response (&lt;24h)</li>
-            <li>Custom KPI reporting</li>
-            <li>Best for scaling businesses</li>
-          </ul>
-          <button class="select-plan-btn" data-plan="High" data-price="1540">Choose High</button>
-        </div>
-
-        <!-- Ultra -->
-        <div class="card" role="listitem" id="card-ultra">
-          <div class="plan-title">Ultra</div>
-          <div class="plan-price">$4980</div>
-          <div class="plan-sub">Monthly Subscription: <strong>$349 / month</strong></div>
-          <ul class="features">
-            <li>24/7 monitoring & optimization</li>
-            <li>Unlimited automation improvements</li>
-            <li>Advanced workflow development</li>
-            <li>Near-instant VIP support</li>
-            <li>AI-powered enhancements</li>
-            <li>Full performance oversight</li>
-            <li>Enterprise-level automation</li>
-          </ul>
-          <button class="select-plan-btn" data-plan="Ultra" data-price="4980">Choose Ultra</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- About Us -->
-    <section class="about" id="about">
-      <h2>About Us</h2>
-      <p>
-        We are a focused team specialized in automations and AI-driven workflows. We help businesses save time, reduce errors,
-        and recover leads by automating routine tasks. Our mission is to give you more time to focus on high-value work while
-        automation handles repetitive processes reliably and securely.
-      </p>
-      <p style="color:var(--muted); margin-top:8px;">We work with Make.com for automation orchestration and integrate with Google Sheets and secure payment providers.</p>
-    </section>
-
-    <!-- Contact area -->
-    <section id="contact" class="contact-area">
-      <!-- Form -->
-      <div class="form-card" id="formCard">
-        <h3 style="color:var(--blue); margin-top:0;">Contact us</h3>
-        <p style="color:var(--muted); margin-top:0;">Fill the form and we will get back to you shortly. The form sends data to your Make webhook.</p>
-
-        <form id="leadForm" autocomplete="on">
-          <div class="form-row">
-            <div class="half">
-              <label for="fullname">Full name</label>
-              <input id="fullname" name="fullname" type="text" required placeholder="Jane Doe" />
-            </div>
-            <div class="half">
-              <label for="company">Company</label>
-              <input id="company" name="company" type="text" placeholder="Company name" />
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="half">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" required placeholder="you@company.com" />
-            </div>
-            <div class="half">
-              <label for="phone">Phone</label>
-              <input id="phone" name="phone" type="tel" placeholder="+1 555 123 4567" />
-            </div>
-          </div>
-
-          <div class="form-row">
-            <label for="plan">Select plan</label>
-            <select id="plan" name="plan" required>
-              <option value="" disabled selected>Choose a plan...</option>
-              <option value="Minimum">Minimum</option>
-              <option value="Medium">Medium</option>
-              <option value="High">High</option>
-              <option value="Ultra">Ultra</option>
-            </select>
-          </div>
-
-          <div class="form-row">
-            <label for="budget">Estimated budget (optional)</label>
-            <input id="budget" name="budget" type="text" placeholder="$ / month (approx)" />
-          </div>
-
-          <div class="form-row">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" placeholder="Tell us about your needs..." required></textarea>
-          </div>
-
-          <div class="form-row">
-            <button id="submitBtn" type="submit" class="submit-btn">Send message</button>
-          </div>
-
-          <div id="formMsg" class="msg" aria-live="polite"></div>
-        </form>
-
-        <p class="small-note" style="margin-top:10px;">By sending the form you agree to be contacted. We respect your privacy.</p>
-      </div>
-
-      <!-- Side card -->
-      <aside class="side-card">
-        <h3>Quick contact</h3>
-        <p style="color:var(--muted); margin:0 0 10px 0;">Prefer email? Contact us directly at:</p>
-        <p style="margin:0 0 8px 0;"><strong style="color:var(--accent)">Email</strong><br>
-          <a href="mailto:danimolina1704@gmail.com" style="color:var(--blue); text-decoration:none;">danimolina1704@gmail.com</a>
-        </p>
-        <div style="margin-top:14px;">
-          <strong class="label-inline">Office</strong>
-          <p class="muted" style="margin:6px 0 0 0">Remote-first — we work globally</p>
-        </div>
-      </aside>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-      <div>© <strong>Daniel Molina</strong> — Automation & AI services · All rights reserved.</div>
-      <div>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-        <a href="mailto:danimolina1704@gmail.com">Email</a>
-      </div>
-    </footer>
-  </div>
-
-  <!-- Payment Modal -->
-  <div class="payment-modal" id="paymentModal">
-    <div class="payment-content">
-      <div class="payment-header">
-        <h2 id="modalPlanTitle">Plan Selected</h2>
-        <span class="close-btn" id="closeModal" title="Close">&times;</span>
-      </div>
-      <h3 id="modalPlanPrice"></h3>
-      <div id="paypal-button-container"></div>
-    </div>
-  </div>
-
 <script>
 const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/1blfs5p6l3fwexrs1nnip5up7tk105me";
 
@@ -331,19 +7,7 @@ const submitBtn = document.getElementById('submitBtn');
 const modal = document.getElementById('paymentModal');
 const closeModal = document.getElementById('closeModal');
 
-function showMsg(text, type){
-  msgBox.className = 'msg ' + (type === 'success' ? 'Parece que el mensaje se cortó antes de terminar el script. Te doy la **versión completa y funcional** del script final para que el formulario se envíe directamente al webhook de Make.com **sin abrir Outlook**, incluyendo PayPal y todo lo que tenías antes:  
-
-```html
-<script>
-const MAKE_WEBHOOK_URL = "https://hook.us2.make.com/1blfs5p6l3fwexrs1nnip5up7tk105me";
-
-const form = document.getElementById('leadForm');
-const msgBox = document.getElementById('formMsg');
-const submitBtn = document.getElementById('submitBtn');
-const modal = document.getElementById('paymentModal');
-const closeModal = document.getElementById('closeModal');
-
+// Función para mostrar mensajes
 function showMsg(text, type){
   msgBox.className = 'msg ' + (type === 'success' ? 'success' : 'error');
   msgBox.textContent = text;
@@ -399,9 +63,9 @@ form.addEventListener('submit', async (e) => {
   }
 });
 
-// PayPal modal
+// Botones de selección de plan para abrir modal PayPal
 document.querySelectorAll('.select-plan-btn').forEach(btn => {
-  btn.addEventListener('click', (ev) => {
+  btn.addEventListener('click', () => {
     const plan = btn.dataset.plan || '';
     const price = btn.dataset.price || '';
     if(price){
@@ -415,6 +79,7 @@ document.querySelectorAll('.select-plan-btn').forEach(btn => {
   });
 });
 
+// Función abrir modal PayPal
 function openPaymentModal(planName, priceValue){
   document.getElementById('modalPlanTitle').textContent = (planName || 'Plan') + ' Plan';
   document.getElementById('modalPlanPrice').textContent = '$' + priceValue;
@@ -447,6 +112,7 @@ function openPaymentModal(planName, priceValue){
   }
 }
 
+// Cerrar modal
 closeModal.addEventListener('click', ()=>{ modal.style.display='none'; });
 window.addEventListener('click', (e)=>{ if(e.target===modal){ modal.style.display='none'; } });
 </script>
