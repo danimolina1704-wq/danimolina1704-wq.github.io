@@ -8,342 +8,210 @@
 <!-- Optional icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
-<!-- PayPal JS SDK (replace client-id if you prefer your own) -->
-<script src="https://www.paypal.com/sdk/js?client-id=ARks9h5PpW-v75JkGaXhAuCxXUcJiZyBtJeZOCRT-JtHmZzJ98t8UaGPW1HMJ9wXuvnHeSg13g2Kyxup&currency=USD"></script>
+<!-- PayPal JS SDK (client-id actualizado) -->
+<script src="https://www.paypal.com/sdk/js?client-id=Ab2PO-TQDQjHGh_xWwzdUeJuQLS-EsFCxvu2hP3NhcDkuhqDZyluk74U35HE_F-2PFt7iCTIbLbacmO8&currency=USD"></script>
 
 <style>
-  :root{
-    --bg:#0d1117;        /* black */
-    --card:#161b22;      /* dark card */
-    --blue:#58a6ff;      /* accent blue */
-    --white:#ffffff;
-    --muted:#8b949e;
-    --accent:#ffb84d;    /* yellow/orange highlight */
-    --cta:#1f6feb;       /* darker blue for hover */
-    --glass: rgba(255,255,255,0.03);
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0; font-family: "Segoe UI", Roboto, Arial, sans-serif;
-    background:var(--bg); color:var(--white);
-    line-height:1.5;
-  }
+:root{
+  --bg:#0d1117;
+  --card:#161b22;
+  --blue:#58a6ff;
+  --white:#ffffff;
+  --muted:#8b949e;
+  --accent:#ffb84d;
+  --cta:#1f6feb;
+  --glass: rgba(255,255,255,0.03);
+}
+*{box-sizing:border-box}
+body{ margin:0; font-family:"Segoe UI", Roboto, Arial, sans-serif; background:var(--bg); color:var(--white); line-height:1.5; }
 
-  .wrap{max-width:1200px;margin:0 auto;padding:28px;}
-  header{ text-align:center; margin-bottom:22px; }
-  header h1{ color:var(--blue); font-size:2.2rem; margin-bottom:6px; }
-  header p{ color:var(--muted); margin-top:0; }
+.wrap{max-width:1200px;margin:0 auto;padding:28px;}
+header{text-align:center;margin-bottom:22px;}
+header h1{color:var(--blue);font-size:2.2rem;margin-bottom:6px;}
+header p{color:var(--muted);margin-top:0;}
 
-  /* Pricing: ensure four cards on one line on wide screens */
-  .pricing-row {
-    display:flex;
-    gap:20px;
-    justify-content:center;
-    align-items:flex-start;
-    flex-wrap:nowrap;           /* keep them in one line when possible */
-    overflow-x:auto;            /* allow horizontal scroll on narrow screens */
-    padding:12px 4px;
-  }
+.pricing-row{display:flex;gap:20px;justify-content:center;align-items:flex-start;flex-wrap:nowrap;overflow-x:auto;padding:12px 4px;}
+.card{background:var(--card);border-radius:12px;padding:20px;width:250px;min-width:230px;border-top:4px solid var(--blue);box-shadow:0 8px 30px rgba(0,0,0,0.6);position:relative;transition: transform .22s, box-shadow .22s;flex:0 0 auto;}
+.card:hover{transform:translateY(-6px);box-shadow:0 18px 45px rgba(0,0,0,0.85);}
 
-  .card{
-    background:var(--card);
-    border-radius:12px;
-    padding:20px;
-    width:250px;
-    min-width:230px;
-    border-top:4px solid var(--blue);
-    box-shadow:0 8px 30px rgba(0,0,0,0.6);
-    position:relative;
-    transition: transform .22s, box-shadow .22s;
-    flex:0 0 auto;
-  }
-  .card:hover{ transform:translateY(-6px); box-shadow:0 18px 45px rgba(0,0,0,0.85); }
+.badge{display:inline-block;background:var(--accent);color:#111;padding:6px 12px;border-radius:999px;font-weight:700;font-size:0.85rem;margin-bottom:10px;}
+.plan-title{color:var(--blue);font-weight:700;margin-bottom:8px;text-align:center;}
+.plan-price{color:var(--accent);font-weight:800;font-size:1.6rem;text-align:center;margin-bottom:6px;}
+.plan-sub{color:#c9d1d9;text-align:center;font-size:0.9rem;margin-bottom:12px;}
+ul.features{list-style:none;padding:0;margin:0 0 12px 0;color:#c9d1d9;font-size:0.94rem;}
+ul.features li{padding:8px 0;border-top:1px solid rgba(255,255,255,0.03);}
 
-  .badge{
-    display:inline-block;
-    background:var(--accent);
-    color:#111;
-    padding:6px 12px;
-    border-radius:999px;
-    font-weight:700;
-    font-size:0.85rem;
-    margin-bottom:10px;
-  }
-  .plan-title{ color:var(--blue); font-weight:700; margin-bottom:8px; text-align:center; }
-  .plan-price{ color:var(--accent); font-weight:800; font-size:1.6rem; text-align:center; margin-bottom:6px; }
-  .plan-sub{ color:#c9d1d9; text-align:center; font-size:0.9rem; margin-bottom:12px; }
-  ul.features{ list-style:none; padding:0; margin:0 0 12px 0; color:#c9d1d9; font-size:0.94rem; }
-  ul.features li{ padding:8px 0; border-top:1px solid rgba(255,255,255,0.03); }
+.card .select-plan-btn{display:block;width:100%;padding:10px;border-radius:10px;border:0;background:var(--blue);color:var(--white);font-weight:700;cursor:pointer;transition:transform .12s, background .12s;}
+.card .select-plan-btn:hover{background:var(--cta);transform:scale(1.02);}
 
-  .card .select-plan-btn {
-    display:block;
-    width:100%;
-    padding:10px;
-    border-radius:10px;
-    border:0;
-    background:var(--blue);
-    color:var(--white);
-    font-weight:700;
-    cursor:pointer;
-    transition:transform .12s, background .12s;
-  }
-  .card .select-plan-btn:hover{ background:var(--cta); transform:scale(1.02); }
+.about{margin:26px 0;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));border-radius:10px;border:1px solid rgba(255,255,255,0.02);}
+.about h2{color:var(--blue);margin-top:0;}
+.about p{color:var(--muted);}
 
-  /* About */
-  .about{ margin:26px 0; padding:18px; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02)); border-radius:10px; border:1px solid rgba(255,255,255,0.02); }
-  .about h2{ color:var(--blue); margin-top:0; }
-  .about p{ color:var(--muted); }
+.contact-area{display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start;margin-top:22px;}
+@media (max-width:980px){.contact-area{grid-template-columns:1fr;}}
 
-  /* Contact area: form + side info */
-  .contact-area{ display:grid; grid-template-columns: 1fr 320px; gap:20px; align-items:start; margin-top:22px; }
-  @media (max-width:980px){ .contact-area{ grid-template-columns: 1fr; } }
+.form-card{background:var(--card);padding:18px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 8px 30px rgba(0,0,0,0.6);}
+.form-row{margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap;}
+.form-row .half{flex:1;min-width:120px;}
+label{display:block;color:var(--muted);font-size:0.88rem;margin-bottom:6px;}
+input[type="text"], input[type="email"], input[type="tel"], select, textarea{width:100%;padding:10px 12px;border-radius:8px;background:var(--glass);border:1px solid rgba(255,255,255,0.04);color:var(--white);outline:none;font-size:0.95rem;}
+select{background:#ffffff;color:#111;border-radius:8px;padding:10px;}
+textarea{min-height:110px;resize:vertical;}
 
-  .form-card{ background:var(--card); padding:18px; border-radius:10px; border:1px solid rgba(255,255,255,0.03); box-shadow: 0 8px 30px rgba(0,0,0,0.6); }
-  .form-row{ margin-bottom:12px; display:flex; gap:8px; flex-wrap:wrap; }
-  .form-row .half{ flex:1; min-width:120px; }
-  label{ display:block; color:var(--muted); font-size:0.88rem; margin-bottom:6px; }
-  input[type="text"], input[type="email"], input[type="tel"], select, textarea{
-    width:100%; padding:10px 12px; border-radius:8px; background:var(--glass); border:1px solid rgba(255,255,255,0.04);
-    color:var(--white); outline:none; font-size:0.95rem;
-  }
-  /* Ensure select options visible */
-  select{ background:#ffffff; color:#111; border-radius:8px; padding:10px; }
+.side-card{background:var(--card);padding:16px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);}
+.side-card h3{color:var(--blue);margin:0 0 10px 0;}
+.side-card p{color:var(--muted);}
 
-  textarea{ min-height:110px; resize:vertical; }
+.submit-btn{width:100%;padding:12px;background:var(--blue);color:var(--white);border:0;border-radius:10px;font-weight:700;cursor:pointer;transition:background .12s;}
+.submit-btn:hover{background:var(--cta);}
 
-  .side-card{ background:var(--card); padding:16px; border-radius:10px; border:1px solid rgba(255,255,255,0.03); }
-  .side-card h3{ color:var(--blue); margin:0 0 10px 0; }
-  .side-card p{ color:var(--muted); }
+.msg{margin-top:12px;padding:12px 14px;border-radius:10px;display:none;}
+.msg.success{background: rgba(33, 197, 132, 0.06); color: #9ef0c6; display:block;}
+.msg.error{background: rgba(255, 99, 71, 0.06); color: #ffb0a6; display:block;}
 
-  .submit-btn{ width:100%; padding:12px; background:var(--blue); color:var(--white); border:0; border-radius:10px; font-weight:700; cursor:pointer; transition:background .12s; }
-  .submit-btn:hover{ background:var(--cta); }
+.payment-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);justify-content:center;align-items:center;z-index:999;}
+.payment-content{background:#0d1117;color:white;padding:22px;border-radius:12px;width:90%;max-width:520px;max-height:90%;overflow-y:auto;border:1px solid rgba(255,255,255,0.03);}
+.payment-header{display:flex;justify-content:space-between;align-items:center;}
+.close-btn{font-size:1.4rem;cursor:pointer;color:var(--accent);}
 
-  .msg{ margin-top:12px; padding:12px 14px; border-radius:10px; display:none; }
-  .msg.success{ background: rgba(33, 197, 132, 0.06); color: #9ef0c6; display:block; }
-  .msg.error{ background: rgba(255, 99, 71, 0.06); color: #ffb0a6; display:block; }
+#paypal-button-container{margin-top:18px;max-height:420px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 
-  /* Payment modal */
-  .payment-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:999; }
-  .payment-content { background:#0d1117; color:white; padding:22px; border-radius:12px; width:90%; max-width:520px; max-height:90%; overflow-y:auto; border:1px solid rgba(255,255,255,0.03); }
-  .payment-header { display:flex; justify-content:space-between; align-items:center; }
-  .close-btn { font-size:1.4rem; cursor:pointer; color:var(--accent); }
+footer{margin-top:26px;padding:16px;border-top:1px solid rgba(255,255,255,0.03);display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;color:var(--muted);}
+footer a{color:var(--blue);text-decoration:none;font-weight:700;margin-left:10px;}
 
-  /* make paypal container scrollable so debit/credit dropdown can be used */
-  #paypal-button-container { margin-top:18px; max-height:420px; overflow-y:auto; -webkit-overflow-scrolling:touch; }
-
-  /* Footer */
-  footer{ margin-top:26px; padding:16px; border-top:1px solid rgba(255,255,255,0.03); display:flex; justify-content:space-between; gap:12px; align-items:center; flex-wrap:wrap; color:var(--muted); }
-  footer a{ color:var(--blue); text-decoration:none; font-weight:700; margin-left:10px; }
-
-  /* responsive: allow horizontal scroll for the pricing row on small screens but keep them in one visual line on wide screens */
-  @media (max-width:800px){
-    .pricing-row{ gap:14px; padding:10px; }
-    .card{ width:220px; min-width:200px; }
-  }
+@media (max-width:800px){.pricing-row{gap:14px;padding:10px;}.card{width:220px;min-width:200px;}}
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <h1>Premium Subscription Plans</h1>
-      <p class="muted">Clear pricing, reliable automations — powered by AI. Secure payments via PayPal or card.</p>
-    </header>
+<div class="wrap">
+<header>
+<h1>Premium Subscription Plans</h1>
+<p class="muted">Clear pricing, reliable automations — powered by AI. Secure payments via PayPal or card.</p>
+</header>
 
-    <!-- Pricing: four cards in one horizontal row (scrolls on narrow screens) -->
-    <section aria-label="pricing">
-      <div class="pricing-row" role="list">
-        <!-- Minimum -->
-        <div class="card" role="listitem" id="card-minimum">
-          <div class="plan-title">Minimum</div>
-          <div class="plan-price">$289</div>
-          <div class="plan-sub">Monthly Subscription: <strong>$39 / month</strong></div>
-          <ul class="features">
-            <li>Weekly automation updates (1 day / week)</li>
-            <li>Basic workflow monitoring</li>
-            <li>Light optimization tasks</li>
-            <li>Monthly performance report</li>
-            <li>Quick adjustments for simple processes</li>
-            <li>Affordable entry-level automation</li>
-            <li>Ideal for small businesses getting started with AI automation</li>
-          </ul>
-          <button class="select-plan-btn" data-plan="Minimum" data-price="289">Choose Minimum</button>
-        </div>
+<section aria-label="pricing">
+<div class="pricing-row" role="list">
+<div class="card" role="listitem" id="card-minimum">
+<div class="plan-title">Minimum</div>
+<div class="plan-price">$289</div>
+<div class="plan-sub">Monthly Subscription: <strong>$39 / month</strong></div>
+<ul class="features">
+<li>Weekly automation updates (1 day / week)</li>
+<li>Basic workflow monitoring</li>
+<li>Light optimization tasks</li>
+<li>Monthly performance report</li>
+<li>Quick adjustments for simple processes</li>
+<li>Affordable entry-level automation</li>
+<li>Ideal for small businesses getting started with AI automation</li>
+</ul>
+<button class="select-plan-btn" data-plan="Minimum" data-price="289">Choose Minimum</button>
+</div>
 
-        <!-- Medium -->
-        <div class="card" role="listitem" id="card-medium">
-          <div class="plan-title">Medium</div>
-          <div class="plan-price">$649</div>
-          <div class="plan-sub">Monthly Subscription: <strong>$79 / month</strong></div>
-          <ul class="features">
-            <li>Automation updates 3 days / week</li>
-            <li>Weekly optimization and fine-tuning</li>
-            <li>Priority support response</li>
-            <li>Implementation of small features</li>
-            <li>Error detection and minor troubleshooting</li>
-            <li>Analytics dashboard access</li>
-            <li>Performance reports</li>
-            <li>Suitable for growing businesses that need consistent automation support</li>
-          </ul>
-          <button class="select-plan-btn" data-plan="Medium" data-price="649">Choose Medium</button>
-        </div>
+<div class="card" role="listitem" id="card-medium">
+<div class="plan-title">Medium</div>
+<div class="plan-price">$649</div>
+<div class="plan-sub">Monthly Subscription: <strong>$79 / month</strong></div>
+<ul class="features">
+<li>Automation updates 3 days / week</li>
+<li>Weekly optimization and fine-tuning</li>
+<li>Priority support response</li>
+<li>Implementation of small features</li>
+<li>Error detection and minor troubleshooting</li>
+<li>Analytics dashboard access</li>
+<li>Performance reports</li>
+<li>Suitable for growing businesses that need consistent automation support</li>
+</ul>
+<button class="select-plan-btn" data-plan="Medium" data-price="649">Choose Medium</button>
+</div>
 
-        <!-- High (BEST VALUE) -->
-        <div class="card" role="listitem" id="card-high" style="border-color:var(--accent); box-shadow:0 18px 50px rgba(255,184,77,0.08);">
-          <div style="text-align:center"><span class="badge">BEST VALUE</span></div>
-          <div class="plan-title">High</div>
-          <div class="plan-price">$1540</div>
-          <div class="plan-sub">Monthly Subscription: <strong>$149 / month</strong></div>
-          <ul class="features">
-            <li>Daily automation updates and system checks</li>
-            <li>Continuous workflow optimization</li>
-            <li>Monthly creation of new automation flows</li>
-            <li>Advanced troubleshooting and error prevention</li>
-            <li>Priority response time (&lt;24 hours)</li>
-            <li>Custom KPI reports and insights</li>
-            <li>Ideal for businesses scaling operations with automation</li>
-          </ul>
-          <button class="select-plan-btn" data-plan="High" data-price="1540">Choose High</button>
-        </div>
+<div class="card" role="listitem" id="card-high" style="border-color:var(--accent); box-shadow:0 18px 50px rgba(255,184,77,0.08);">
+<div style="text-align:center"><span class="badge">BEST VALUE</span></div>
+<div class="plan-title">High</div>
+<div class="plan-price">$1540</div>
+<div class="plan-sub">Monthly Subscription: <strong>$149 / month</strong></div>
+<ul class="features">
+<li>Daily automation updates and system checks</li>
+<li>Continuous workflow optimization</li>
+<li>Monthly creation of new automation flows</li>
+<li>Advanced troubleshooting and error prevention</li>
+<li>Priority response time (&lt;24 hours)</li>
+<li>Custom KPI reports and insights</li>
+<li>Ideal for businesses scaling operations with automation</li>
+</ul>
+<button class="select-plan-btn" data-plan="High" data-price="1540">Choose High</button>
+</div>
 
-        <!-- Ultra -->
-        <div class="card" role="listitem" id="card-ultra">
-          <div class="plan-title">Ultra</div>
-          <div class="plan-price">$4980</div>
-          <div class="plan-sub">Monthly Subscription: <strong>$349 / month</strong></div>
-          <ul class="features">
-            <li>24/7 continuous monitoring and optimization</li>
-            <li>Unlimited automation improvements</li>
-            <li>Development of advanced and complex workflows</li>
-            <li>VIP support with near-instant response</li>
-            <li>AI-powered enhancements and custom integrations</li>
-            <li>Full system oversight and performance management</li>
-            <li>Perfect for high-volume, enterprise-level automation needs</li>
-          </ul>
-          <button class="select-plan-btn" data-plan="Ultra" data-price="4980">Choose Ultra</button>
-        </div>
-      </div>
-    </section>
+<div class="card" role="listitem" id="card-ultra">
+<div class="plan-title">Ultra</div>
+<div class="plan-price">$4980</div>
+<div class="plan-sub">Monthly Subscription: <strong>$349 / month</strong></div>
+<ul class="features">
+<li>24/7 continuous monitoring and optimization</li>
+<li>Unlimited automation improvements</li>
+<li>Development of advanced and complex workflows</li>
+<li>VIP support with near-instant response</li>
+<li>AI-powered enhancements and custom integrations</li>
+<li>Full system oversight and performance management</li>
+<li>Perfect for high-volume, enterprise-level automation needs</li>
+</ul>
+<button class="select-plan-btn" data-plan="Ultra" data-price="4980">Choose Ultra</button>
+</div>
+</div>
+</section>
 
-    <!-- About Us -->
-    <section class="about" id="about">
-      <h2>About Us</h2>
-      <p>
-        We are a focused team specialized in automations and AI-driven workflows. We help businesses save time, reduce errors,
-        and recover leads by automating routine tasks. Our mission is to give you more time to focus on high-value work while
-        automation handles repetitive processes reliably and securely.
-      </p>
-      <p style="color:var(--muted); margin-top:8px;">We work with Make.com for automation orchestration and integrate with Google Sheets, CRMs, and secure payment providers.</p>
-    </section>
+<section class="about" id="about">
+<h2>About Us</h2>
+<p>We are a focused team specialized in automations and AI-driven workflows. We help businesses save time, reduce errors, and recover leads by automating routine tasks. Our mission is to give you more time to focus on high-value work while automation handles repetitive processes reliably and securely.</p>
+<p style="color:var(--muted); margin-top:8px;">We work with Make.com for automation orchestration and integrate with Google Sheets, CRMs, and secure payment providers.</p>
+</section>
 
-    <!-- Contact area -->
-    <section id="contact" class="contact-area">
-      <!-- Form -->
-      <div class="form-card" id="formCard">
-        <h3 style="color:var(--blue); margin-top:0;">Contact us</h3>
-        <p style="color:var(--muted); margin-top:0;">Fill the form and we will get back to you shortly. The form sends data to your Make webhook and falls back to email if necessary.</p>
+<section id="contact" class="contact-area">
+<div class="form-card" id="formCard">
+<h3 style="color:var(--blue); margin-top:0;">Contact us</h3>
+<p style="color:var(--muted); margin-top:0;">Fill the form and we will get back to you shortly. The form sends data to your Make webhook and falls back to email if necessary.</p>
+<form id="leadForm" autocomplete="on">
+<div class="form-row">
+<div class="half"><label for="fullname">Full name</label><input id="fullname" name="fullname" type="text" required placeholder="Jane Doe" /></div>
+<div class="half"><label for="company">Company</label><input id="company" name="company" type="text" placeholder="Company name" /></div>
+</div>
+<div class="form-row">
+<div class="half"><label for="email">Email</label><input id="email" name="email" type="email" required placeholder="you@company.com" /></div>
+<div class="half"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" placeholder="+1 555 123 4567" /></div>
+</div>
+<div class="form-row"><label for="plan">Select plan</label><select id="plan" name="plan" required aria-required="true"><option value="" disabled selected>Choose a plan...</option><option value="Minimum">Minimum</option><option value="Medium">Medium</option><option value="High">High</option><option value="Ultra">Ultra</option></select></div>
+<div class="form-row"><label for="budget">Estimated budget (optional)</label><input id="budget" name="budget" type="text" placeholder="$ / month (approx)" /></div>
+<div class="form-row"><label for="message">Message</label><textarea id="message" name="message" placeholder="Tell us about your needs..." required></textarea></div>
+<div class="form-row"><button id="submitBtn" type="submit" class="submit-btn">Send message</button></div>
+<div id="formMsg" class="msg" aria-live="polite"></div>
+</form>
+<p class="small-note" style="margin-top:10px;">By sending the form you agree to be contacted. We respect your privacy.</p>
+</div>
 
-        <!-- IMPORTANT: replace MAKE_WEBHOOK_URL with your Make webhook URL -->
-        <form id="leadForm" autocomplete="on">
-          <div class="form-row">
-            <div class="half">
-              <label for="fullname">Full name</label>
-              <input id="fullname" name="fullname" type="text" required placeholder="Jane Doe" />
-            </div>
-            <div class="half">
-              <label for="company">Company</label>
-              <input id="company" name="company" type="text" placeholder="Company name" />
-            </div>
-          </div>
+<aside class="side-card" aria-label="Contact details">
+<h3>Quick contact</h3>
+<p style="color:var(--muted); margin:0 0 10px 0;">Prefer email? Contact us directly at:</p>
+<p style="margin:0 0 8px 0;"><strong style="color:var(--accent)">Email</strong><br><a href="mailto:danimolina1704@gmail.com" style="color:var(--blue); text-decoration:none;">danimolina1704@gmail.com</a></p>
+<div style="margin-top:14px;"><strong class="label-inline">Office</strong><p class="muted" style="margin:6px 0 0 0">Remote-first — we work globally</p></div>
+</aside>
+</section>
 
-          <div class="form-row">
-            <div class="half">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" required placeholder="you@company.com" />
-            </div>
-            <div class="half">
-              <label for="phone">Phone</label>
-              <input id="phone" name="phone" type="tel" placeholder="+1 555 123 4567" />
-            </div>
-          </div>
+<footer>
+<div>© <strong>Daniel Molina</strong> — Automation & AI services · All rights reserved.</div>
+<div><a href="#about">About</a><a href="#contact">Contact</a><a href="mailto:danimolina1704@gmail.com">Email</a></div>
+</footer>
+</div>
 
-          <div class="form-row">
-            <label for="plan">Select plan</label>
-            <select id="plan" name="plan" required aria-required="true">
-              <option value="" disabled selected>Choose a plan...</option>
-              <option value="Minimum">Minimum</option>
-              <option value="Medium">Medium</option>
-              <option value="High">High</option>
-              <option value="Ultra">Ultra</option>
-            </select>
-          </div>
-
-          <div class="form-row">
-            <label for="budget">Estimated budget (optional)</label>
-            <input id="budget" name="budget" type="text" placeholder="$ / month (approx)" />
-          </div>
-
-          <div class="form-row">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" placeholder="Tell us about your needs..." required></textarea>
-          </div>
-
-          <div class="form-row">
-            <button id="submitBtn" type="submit" class="submit-btn">Send message</button>
-          </div>
-
-          <div id="formMsg" class="msg" aria-live="polite"></div>
-        </form>
-
-        <p class="small-note" style="margin-top:10px;">By sending the form you agree to be contacted. We respect your privacy.</p>
-      </div>
-
-      <!-- Side card with contact info (email only per request) -->
-      <aside class="side-card" aria-label="Contact details">
-        <h3>Quick contact</h3>
-        <p style="color:var(--muted); margin:0 0 10px 0;">Prefer email? Contact us directly at:</p>
-        <p style="margin:0 0 8px 0;"><strong style="color:var(--accent)">Email</strong><br>
-          <a href="mailto:danimolina1704@gmail.com" style="color:var(--blue); text-decoration:none;">danimolina1704@gmail.com</a>
-        </p>
-        <div style="margin-top:14px;">
-          <strong class="label-inline">Office</strong>
-          <p class="muted" style="margin:6px 0 0 0">Remote-first — we work globally</p>
-        </div>
-      </aside>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-      <div>© <strong>Daniel Molina</strong> — Automation & AI services · All rights reserved.</div>
-      <div>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-        <a href="mailto:danimolina1704@gmail.com">Email</a>
-      </div>
-    </footer>
-  </div>
-
-  <!-- Payment Modal -->
-  <div class="payment-modal" id="paymentModal" role="dialog" aria-hidden="true">
-    <div class="payment-content" role="document">
-      <div class="payment-header">
-        <h2 id="modalPlanTitle">Plan Selected</h2>
-        <span class="close-btn" id="closeModal" title="Close">&times;</span>
-      </div>
-      <h3 id="modalPlanPrice"></h3>
-      <div id="paypal-button-container" aria-live="polite"></div>
-    </div>
-  </div>
+<div class="payment-modal" id="paymentModal" role="dialog" aria-hidden="true">
+<div class="payment-content" role="document">
+<div class="payment-header"><h2 id="modalPlanTitle">Plan Selected</h2><span class="close-btn" id="closeModal" title="Close">&times;</span></div>
+<h3 id="modalPlanPrice"></h3>
+<div id="paypal-button-container" aria-live="polite"></div>
+</div>
+</div>
 
 <script>
-/*
-  Notes:
-  - Replace MAKE_WEBHOOK_URL with your Make.com webhook (HTTP -> Custom webhook).
-  - PayPal SDK is included above; if you want to use your own client-id replace the script src.
-  - The form POSTs JSON to the Make webhook; in Make map fields to Google Sheets and send an email to danimolina1704@gmail.com.
-  - No WhatsApp integration is included (per request).
-*/
-
-const MAKE_WEBHOOK_URL = "https://hook.us1.make.com/REPLACE_WITH_YOUR_WEBHOOK"; // <- replace this
+const MAKE_WEBHOOK_URL = "https://hook.us1.make.com/REPLACE_WITH_YOUR_WEBHOOK";
 
 const form = document.getElementById('leadForm');
 const msgBox = document.getElementById('formMsg');
@@ -351,131 +219,36 @@ const submitBtn = document.getElementById('submitBtn');
 const modal = document.getElementById('paymentModal');
 const closeModal = document.getElementById('closeModal');
 
-function showMsg(text, type){
-  msgBox.className = 'msg ' + (type === 'success' ? 'success' : 'error');
-  msgBox.textContent = text;
-  msgBox.style.display = 'block';
-  if(type === 'success') setTimeout(()=>{ msgBox.style.display='none'; }, 6000);
-}
+function showMsg(text,type){ msgBox.className='msg '+(type==='success'?'success':'error'); msgBox.textContent=text; msgBox.style.display='block'; if(type==='success') setTimeout(()=>{ msgBox.style.display='none'; },6000); }
 
-// Form submit sends JSON to Make webhook
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Sending...';
-  msgBox.style.display = 'none';
+form.addEventListener('submit', async e=>{
+e.preventDefault();
+submitBtn.disabled=true; submitBtn.textContent='Sending...'; msgBox.style.display='none';
 
-  const payload = {
-    fullname: form.fullname.value.trim(),
-    email: form.email.value.trim(),
-    company: form.company.value.trim(),
-    phone: form.phone.value.trim(),
-    plan: form.plan.value,
-    budget: form.budget.value.trim(),
-    message: form.message.value.trim(),
-    submitted_at: new Date().toISOString()
-  };
+const payload={ fullname:form.fullname.value.trim(), email:form.email.value.trim(), company:form.company.value.trim(), phone:form.phone.value.trim(), plan:form.plan.value, budget:form.budget.value.trim(), message:form.message.value.trim() };
 
-  // basic validation
-  if(!payload.fullname || !payload.email || !payload.plan || !payload.message){
-    showMsg('Please fill required fields: Name, Email, Plan, Message.', 'error');
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Send message';
-    return;
-  }
-
-  try {
-    const res = await fetch(MAKE_WEBHOOK_URL, {
-      method: 'POST',
-      mode: 'cors',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(payload)
-    });
-
-    if(res.ok){
-      showMsg('Thanks — your message was sent. We will contact you soon.', 'success');
-      form.reset();
-    } else {
-      showMsg('Server error: opening email client as fallback. Please send your message.', 'error');
-      fallbackMail(payload);
-    }
-  } catch(err){
-    console.warn('Webhook error:', err);
-    showMsg('Network error: opening email client as fallback.', 'error');
-    fallbackMail(payload);
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Send message';
-  }
+try{
+const resp=await fetch(MAKE_WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+if(resp.ok){ showMsg('Form submitted successfully!', 'success'); form.reset(); } else { showMsg('Error submitting form. Please try again.','error'); }
+}catch(err){ showMsg('Error submitting form. Please check your connection.','error');}
+submitBtn.disabled=false; submitBtn.textContent='Send message';
 });
 
-function fallbackMail(payload){
-  const subject = encodeURIComponent(`New lead: ${payload.fullname} — ${payload.plan}`);
-  const body = encodeURIComponent(
-    `Name: ${payload.fullname}\nEmail: ${payload.email}\nCompany: ${payload.company}\nPhone: ${payload.phone}\nPlan: ${payload.plan}\nBudget: ${payload.budget}\n\nMessage:\n${payload.message}`
-  );
-  window.location.href = `mailto:danimolina1704@gmail.com?subject=${subject}&body=${body}`;
-}
+// Payment modal logic
+const planButtons=document.querySelectorAll('.select-plan-btn');
+const modalTitle=document.getElementById('modalPlanTitle');
+const modalPrice=document.getElementById('modalPlanPrice');
 
-// Payment modal logic: open when clicking a card button with price
-document.querySelectorAll('.select-plan-btn').forEach(btn => {
-  btn.addEventListener('click', (ev) => {
-    const plan = btn.dataset.plan || btn.closest('.card')?.querySelector('.plan-title')?.textContent || '';
-    const price = btn.dataset.price || btn.closest('.card')?.querySelector('.plan-price')?.textContent?.replace(/[^0-9.]/g,'') || '';
-    // if price found, open payment modal, else scroll to contact and preselect
-    if(price){
-      openPaymentModal(plan.trim(), price.trim());
-    } else {
-      // preselect and scroll to contact
-      const card = btn.closest('.card');
-      const title = card ? card.querySelector('.plan-title').textContent.trim() : '';
-      if(title){
-        const sel = document.getElementById('plan');
-        sel.value = title;
-      }
-      document.getElementById('contact').scrollIntoView({behavior:'smooth', block:'center'});
-      document.getElementById('message').focus();
-    }
-  });
-});
+planButtons.forEach(btn=>{ btn.addEventListener('click', ()=>{
+  modal.style.display='flex';
+  modalTitle.textContent=btn.dataset.plan+' Plan';
+  modalPrice.textContent='$'+btn.dataset.price;
+  paypal.Buttons({ createOrder:(data,actions)=>{ return actions.order.create({ purchase_units:[{ amount:{ value:btn.dataset.price } }] }); }, onApprove:(data,actions)=>{ return actions.order.capture().then(details=>{ alert('Transaction completed by '+details.payer.name.given_name); modal.style.display='none'; }); } }).render('#paypal-button-container'); 
+})});
 
-function openPaymentModal(planName, priceValue){
-  document.getElementById('modalPlanTitle').textContent = (planName || 'Plan') + ' Plan';
-  document.getElementById('modalPlanPrice').textContent = '$' + priceValue;
-  modal.style.display = 'flex';
-  modal.setAttribute('aria-hidden','false');
+closeModal.addEventListener('click', ()=>{ modal.style.display='none'; document.getElementById('paypal-button-container').innerHTML=''; });
 
-  const container = document.getElementById('paypal-button-container');
-  container.innerHTML = '';
-
-  if(window.paypal){
-    paypal.Buttons({
-      style: { shape: 'rect', color: 'gold', layout: 'vertical', label: 'pay' },
-      createOrder: function(data, actions) {
-        return actions.order.create({
-          purchase_units: [{ amount: { value: priceValue } }]
-        });
-      },
-      onApprove: function(data, actions) {
-        return actions.order.capture().then(function(details) {
-          alert("Payment completed by " + (details.payer?.name?.given_name || 'customer') + ".");
-          modal.style.display = 'none';
-          modal.setAttribute('aria-hidden','true');
-        });
-      },
-      onError: function(err){
-        console.error('PayPal error', err);
-        alert('Payment error. Please try again or contact us.');
-      }
-    }).render('#paypal-button-container');
-  } else {
-    container.innerHTML = '<p style="color:#ddd">PayPal SDK not loaded.</p>';
-  }
-}
-
-closeModal.addEventListener('click', ()=>{ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); });
-window.addEventListener('click', (e)=>{ if(e.target===modal){ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); } });
-
+window.addEventListener('click', e=>{ if(e.target===modal){ modal.style.display='none'; document.getElementById('paypal-button-container').innerHTML=''; }});
 </script>
 </body>
 </html>
